@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Associates - Ivory, Navy & Gold Theme</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter and Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Custom CSS for Ivory + Deep Navy + Gold Theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFF0; /* Ivory */
+            color: #1e3a8a; /* Deep Navy Text */
+        }
+
+        .font-playfair { font-family: 'Playfair Display', serif; }
+
+        .hero-section {
+            background-image: url('https://images.pexels.com/photos/11384083/pexels-photo-11384083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(255, 255, 240, 0.1), rgba(255, 255, 240, 0.6));
+            z-index: 1;
+        }
+
+        .hero-content { position: relative; z-index: 2; }
+        .hero-title span, .hero-subtitle {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInLetter 0.5s forwards;
+        }
+        .hero-title span { display: inline-block; }
+        .hero-subtitle { animation-delay: 1s; }
+        @keyframes fadeInLetter { to { opacity: 1; transform: translateY(0); } }
+
+        .section-transition {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .section-transition.in-view { opacity: 1; transform: translateY(0); }
+        
+        #project-modal {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-tab.active {
+            background-color: #d4af37; /* Gold */
+            color: #ffffff;
+        }
+
+        .modal-tab-content { display: none; animation: fadeInContent 0.5s; }
+        .modal-tab-content.active { display: block; }
+
+        @keyframes fadeInContent {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .custom-cursor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background: rgba(212, 175, 55, 0.9); /* Gold */
+            color: #1e3a8a;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .project-card:hover {
+            cursor: none;
+        }
+    </style>
+</head>
+<body class="bg-[#FFFFF0]">
+
+    <!-- Custom Cursor Element -->
+    <div id="custom-cursor" class="custom-cursor">View Project</div>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-[#FFFFF0]/80 backdrop-blur-sm shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-900">Sri Associates</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-gray-600 hover:text-yellow-600 transition">About</a>
+                <a href="#services" class="text-gray-600 hover:text-yellow-600 transition">Services</a>
+                <a href="#projects" class="text-gray-600 hover:text-yellow-600 transition">Projects</a>
+                <a href="#location" class="text-gray-600 hover:text-yellow-600 transition">Location</a>
+                <a href="#contact" style="background-color: #d4af37;" class="text-white px-4 py-2 rounded-md hover:opacity-90 transition">Contact Us</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none"><i class="fas fa-bars text-2xl"></i></button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="#about" class="block py-2 text-gray-600 hover:text-yellow-600">About</a>
+            <a href="#services" class="block py-2 text-gray-600 hover:text-yellow-600">Services</a>
+            <a href="#projects" class="block py-2 text-gray-600 hover:text-yellow-600">Projects</a>
+            <a href="#location" class="block py-2 text-gray-600 hover:text-yellow-600">Location</a>
+            <a href="#contact" style="background-color: #d4af37;" class="block mt-2 text-white text-center px-4 py-2 rounded-md hover:opacity-90">Contact Us</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section h-screen flex items-center justify-center text-center">
+            <div class="hero-content max-w-4xl mx-auto px-4">
+                <h1 class="hero-title font-playfair text-4xl md:text-6xl font-bold mb-4 leading-tight text-blue-900"></h1>
+                <p class="hero-subtitle text-lg md:text-xl text-blue-800 mb-8">Your trusted partner for premium construction and real estate development.</p>
+                <div class="space-x-4">
+                    <a href="#projects" style="background-color: #d4af37;" class="text-white px-8 py-3 rounded-md text-lg font-semibold hover:opacity-90 transition-transform transform hover:scale-105">View Projects</a>
+                    <a href="#contact" class="bg-transparent border-2 border-blue-900 text-blue-900 px-8 py-3 rounded-md text-lg font-semibold hover:bg-blue-900 hover:text-white transition-all">Contact Us</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 bg-[#FFFFF0]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 section-transition">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-900">About Sri Associates</h2>
+                    <p class="text-gray-500 mt-2">Decades of Experience, A Commitment to Excellence.</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2 section-transition">
+                        <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Team Meeting" class="rounded-lg shadow-xl w-full h-full object-cover">
+                    </div>
+                    <div class="md:w-1/2 section-transition">
+                        <h3 class="text-2xl font-semibold text-blue-900 mb-4">Our Story</h3>
+                        <p class="text-gray-600 mb-4">
+                            Founded in Visakhapatnam, Sri Associates has grown to become a leading name in the construction and real estate sector. Our journey is built on a foundation of trust, quality, and an unwavering commitment to our clients. We specialize in turning complex visions into tangible, high-quality structures that stand the test of time.
+                        </p>
+                        <p class="text-gray-600">
+                            Our core values—Integrity, Quality, and Innovation—guide every project we undertake, ensuring we not only meet but exceed expectations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 section-transition">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-900">Our Services</h2>
+                    <p class="text-gray-500 mt-2">Comprehensive solutions for all your construction needs.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center section-transition hover:shadow-xl transition-shadow">
+                        <div style="color: #d4af37;" class="mb-4"><i class="fas fa-home text-4xl"></i></div>
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Residential Construction</h3>
+                        <p class="text-gray-600">Building beautiful, functional, and enduring homes.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center section-transition hover:shadow-xl transition-shadow">
+                        <div style="color: #d4af37;" class="mb-4"><i class="fas fa-building text-4xl"></i></div>
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Commercial Construction</h3>
+                        <p class="text-gray-600">Creating state-of-the-art commercial spaces.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center section-transition hover:shadow-xl transition-shadow">
+                        <div style="color: #d4af37;" class="mb-4"><i class="fas fa-paint-roller text-4xl"></i></div>
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">Renovation & Remodeling</h3>
+                        <p class="text-gray-600">Transforming existing spaces with modern designs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 bg-[#FFFFF0]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 section-transition">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-900">Our Projects</h2>
+                    <p class="text-gray-500 mt-2">A showcase of our finest work and craftsmanship.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl section-transition"
+                         data-title="Luxury Villa, Rushikonda" data-description="A stunning residential project with panoramic sea views, modern amenities, and luxurious finishes." data-image="https://images.pexels.com/photos/259962/pexels-photo-259962.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+                        <div class="relative">
+                            <img src="https://images.pexels.com/photos/259962/pexels-photo-259962.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Luxury Villa Project" class="w-full h-60 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-blue-900">Luxury Villa, Rushikonda</h3>
+                            <p class="text-gray-600 mt-2">A stunning residential project with panoramic sea views.</p>
+                        </div>
+                    </div>
+                    <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl section-transition"
+                         data-title="IT Park, Madhurawada" data-description="A modern commercial complex designed for tech companies, featuring state-of-the-art infrastructure." data-image="https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+                        <div class="relative">
+                            <img src="https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="IT Park Project" class="w-full h-60 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-blue-900">IT Park, Madhurawada</h3>
+                            <p class="text-gray-600 mt-2">A modern commercial complex for tech companies.</p>
+                        </div>
+                    </div>
+                    <div class="project-card bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl section-transition"
+                         data-title="Apartment Remodel, Seethammadhara" data-description="Complete interior and exterior renovation of a classic apartment, blending modern aesthetics with timeless design." data-image="https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+                        <div class="relative">
+                            <img src="https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Apartment Remodel Project" class="w-full h-60 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-blue-900">Apartment Remodel</h3>
+                            <p class="text-gray-600 mt-2">Complete interior and exterior renovation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="location" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 section-transition">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-900">Our Location</h2>
+                    <p class="text-gray-500 mt-2">Visit us at our office in Lawson's Bay Colony.</p>
+                </div>
+                <div class="rounded-lg overflow-hidden shadow-2xl section-transition">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15201.229381858052!2d83.3228498418044!3d17.73078972880017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a39436d34a52f69%3A0x6c2c1b8272895b66!2sLawson&#39;s%20Bay%20Colony%2C%20Pedda%20Waltair%2C%20Visakhapatnam%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1721327885555!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-[#FFFFF0]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 section-transition">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-900">Get In Touch</h2>
+                    <p class="text-gray-500 mt-2">Let's discuss your next project.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <div class="lg:w-2/3 bg-slate-50 p-8 rounded-lg shadow-inner section-transition">
+                        <form id="contact-form">
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
+                                    <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-white border border-slate-300 text-blue-900 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-white border border-slate-300 text-blue-900 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 bg-white border border-slate-300 text-blue-900 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500" required></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" style="background-color: #d4af37;" class="w-full text-white font-bold py-3 px-6 rounded-md hover:opacity-90 transition-all">Send Message</button>
+                            </div>
+                            <div id="form-status" class="mt-4 text-center"></div>
+                        </form>
+                    </div>
+                    <div class="lg:w-1/3 section-transition">
+                        <div class="bg-blue-900 text-white p-8 rounded-lg shadow-lg h-full">
+                            <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                            <div class="space-y-4">
+                                <p class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-4"></i><span>Lawson's Bay Colony<br>Visakhapatnam, AP</span></p>
+                                <p class="flex items-center"><i class="fas fa-phone mr-4"></i><span>+91 94414 84007</span></p>
+                                <p class="flex items-center"><i class="fas fa-mobile-alt mr-4"></i><span>+91 97040 74756</span></p>
+                                <p class="flex items-center"><i class="fas fa-envelope mr-4"></i><span>sriassociates1289@gmail.com</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-blue-900 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <a href="#" class="text-2xl font-bold text-white">Sri Associates</a>
+            <p class="text-slate-300 my-6">Making Your Vision a Reality</p>
+            <p class="text-slate-400">&copy; <span id="year"></span> Sri Associates. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Project Modal -->
+    <div id="project-modal" class="fixed inset-0 z-50 items-center justify-center hidden">
+        <div id="modal-content" class="bg-white rounded-lg shadow-2xl w-11/12 md:w-3/4 lg:w-2/3 max-w-5xl max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300">
+            <div class="p-4 flex justify-between items-center border-b border-slate-200 flex-shrink-0">
+                <h3 id="modal-title" class="text-xl font-bold text-blue-900"></h3>
+                <button id="close-modal" class="text-gray-500 hover:text-blue-900 text-2xl">&times;</button>
+            </div>
+            <div class="flex-shrink-0 border-b border-slate-200">
+                <div class="flex space-x-1 p-2">
+                    <button data-tab="details" class="modal-tab px-4 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-slate-100">Details</button>
+                    <button data-tab="floor-plans" class="modal-tab px-4 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-slate-100">Floor Plans</button>
+                    <button data-tab="interior-design" class="modal-tab px-4 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-slate-100">Interior Design</button>
+                </div>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <div id="tab-details" class="modal-tab-content">
+                    <img id="modal-image" src="" alt="Project Image" class="w-full h-auto rounded-lg mb-4">
+                    <p id="modal-description" class="text-gray-600"></p>
+                </div>
+                <div id="tab-floor-plans" class="modal-tab-content">
+                    <h4 class="text-lg font-semibold text-blue-900 mb-4">Floor Plans</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <img src="https://images.pexels.com/photos/1109541/pexels-photo-1109541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Floor Plan 1" class="w-full h-auto rounded-lg object-cover aspect-video">
+                        <img src="https://images.pexels.com/photos/271753/pexels-photo-271753.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Floor Plan 2" class="w-full h-auto rounded-lg object-cover aspect-video">
+                    </div>
+                </div>
+                <div id="tab-interior-design" class="modal-tab-content">
+                    <h4 class="text-lg font-semibold text-blue-900 mb-4">Interior Design Gallery</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Interior 1" class="w-full h-auto rounded-lg object-cover aspect-video">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const heroTitle = document.querySelector('.hero-title');
+            const text = "Designing Dreams. <br> Delivering Results.";
+            const textParts = text.split('<br>');
+            textParts.forEach((part, partIndex) => {
+                const line = document.createElement('div');
+                part.trim().split('').forEach((char, charIndex) => {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    span.style.animationDelay = `${(partIndex * 10 + charIndex) * 0.05}s`;
+                    line.appendChild(span);
+                });
+                heroTitle.appendChild(line);
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const sections = document.querySelectorAll('.section-transition');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { 
+                threshold: 0.1
+            });
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            const cursor = document.getElementById('custom-cursor');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            if (window.matchMedia("(pointer: fine)").matches) {
+                document.addEventListener('mousemove', e => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+
+                projectCards.forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        cursor.style.display = 'block';
+                        setTimeout(() => cursor.style.opacity = '1', 20);
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        cursor.style.opacity = '0';
+                        setTimeout(() => cursor.style.display = 'none', 200);
+                    });
+                });
+            }
+
+            const modal = document.getElementById('project-modal');
+            const modalContent = document.getElementById('modal-content');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalImage = document.getElementById('modal-image');
+            const modalDescription = document.getElementById('modal-description');
+            const modalTabs = document.querySelectorAll('.modal-tab');
+            const modalTabContents = document.querySelectorAll('.modal-tab-content');
+
+            projectCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    modalTitle.textContent = card.dataset.title;
+                    modalImage.src = card.dataset.image;
+                    modalDescription.textContent = card.dataset.description;
+
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+                    document.body.style.overflow = 'hidden';
+                    
+                    switchTab('details');
+                });
+            });
+
+            function closeModal() {
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            }
+
+            function switchTab(tabId) {
+                modalTabs.forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.tab === tabId);
+                });
+                modalTabContents.forEach(content => {
+                    content.classList.toggle('active', content.id === `tab-${tabId}`);
+                });
+            }
+
+            modalTabs.forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formStatus = document.getElementById('form-status') || document.createElement('div');
+                if(!document.getElementById('form-status')) {
+                    contactForm.appendChild(formStatus)
+                }
+                formStatus.textContent = 'Sending...';
+                setTimeout(() => {
+                    formStatus.textContent = 'Thank you! Your message has been sent.';
+                    contactForm.reset();
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
